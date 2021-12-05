@@ -1,0 +1,82 @@
+<div class="row">
+    <div class="col-md-2">
+        <label for="categories">Odaberite kategoriju:</label>
+        <select id="categories" class="form-select" [(ngModel)]="selectedCategory" (ngModelChange)="onCategoryChange()">
+            <option selected></option>
+            <option *ngFor="let category of categories" value={{category.categoryId}}>
+                {{category.categoryName}}
+            </option>
+        </select>
+    </div>    
+</div>
+
+<div class="row" *ngIf="selectedCategory">
+    <div class="col-md-2 mt-3" *ngIf="!isAdding">
+        <button class="form-control btn btn-secondary" (click)="addProduct()">Dodaj novi Proizvod</button>
+    </div>
+    <div class="col-md-2 mt-3" *ngIf="isAdding">
+        <button class="form-control btn btn-secondary" (click)="backToProductsView()">Vrati se nazad</button>
+    </div>
+</div>
+
+<app-add-product *ngIf="isAdding" [categoryId]="selectedCategory" [suppliers]="suppliers" (onProductAdd)="onProductAdd()"></app-add-product>
+
+<div class="row my-5" *ngIf="!selectedCategory">
+    <div class="col-md-12">
+        <div class="alert alert-primary" role="alert">
+            Trenutno nije odabrana ni jedna kategorija za prikaz proizvoda.
+        </div>
+    </div>
+</div>
+
+<div class="row mt-5" *ngIf="selectedCategory && !isAdding">
+    <div class="col-md-2">
+        <select id="suppliers" class="form-select" [(ngModel)]="supplierId">
+            <option value="0" selected>Dobavljaci</option>
+            <option *ngFor="let supplier of suppliers" value={{supplier.supplierId}}>
+                {{supplier.companyName}}
+            </option>
+        </select>
+    </div>
+    <div class="col-md-2">
+        <input class="form-control" placeholder="Jedinicna cena" type="number" id="unitPrice" [(ngModel)]="unitPrice">
+    </div> 
+    <div class="col-md-1">
+        <button class="form-control btn btn-outline-info" (click)="searchProducts()">Pretrazi</button>
+    </div>     
+</div>
+
+<div class="my-2 products-table" *ngIf="selectedCategory && !isAdding">
+    <div class="row border py-2 bg-light">
+        <div class="col-md-1">
+            <strong>Id</strong>
+        </div>
+        <div class="col-md-2">
+            <strong>Naziv</strong>
+        </div>
+        <div class="col-md-2">
+            <strong>Dobavljac</strong>
+        </div>
+        <div class="col-md-1">
+            <strong>Kategorija</strong>
+        </div>
+        <div class="col-md-1">
+            <strong>Jedinicna cena</strong>
+        </div>
+        <div class="col-md-1">
+            <strong>Stanje</strong>
+        </div>
+        <div class="col-md-1">
+            <strong>Ukupna cena</strong>
+        </div>
+        <div class="col-md-1">
+            <strong>Proizvodi se</strong>
+        </div>
+        <div class="col-md-2">
+            <strong>Akcije</strong>
+        </div>
+    </div>
+    <ng-container *ngFor="let product of filteredProducts; let i = index">
+        <app-product [product]="product" [suppliers]="suppliers" [categories]="categories" [index]="i" (onProductEditDelete)="onProductEditDelete()"></app-product>
+    </ng-container>
+</div>

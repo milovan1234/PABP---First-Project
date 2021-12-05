@@ -1,0 +1,64 @@
+<div class="container" *ngIf="orderDetails.length > 0">
+    <h5 class="my-3">Detalji o porudzbinama:</h5>
+    <div class="row my-3">
+        <div class="col-md-2">
+            <button class="btn btn-outline-secondary mx-2" (click)="previousPage()">
+                <i class="fa fa-chevron-left"></i>
+            </button>
+            <button class="btn btn-outline-secondary" (click)="nextPage()">
+                <i class="fa fa-chevron-right"></i>
+            </button>
+        </div>
+    </div>    
+    <div class="row border py-2 bg-light">
+        <div class="col-md-3">
+            <strong>Id porudzbine</strong>
+        </div>
+        <div class="col-md-3">
+            <strong>Id proizvoda</strong>
+        </div>
+        <div class="col-md-2">
+            <strong>Jedinicna cena</strong>
+        </div>
+        <div class="col-md-2">
+            <strong>Kolicina</strong>
+        </div>
+        <div class="col-md-2">
+            <strong>Ukupna cena</strong>
+        </div>
+    </div>
+    <div *ngFor="let orderDetail of orderDetailsView; let i = index" class="row border py-2" [ngClass]="{'bg-light': i % 2 !== 0}">
+        <div class="col-md-3">
+            {{orderDetail.orderId}}
+        </div>
+        <div class="col-md-3">
+            {{orderDetail.productId}}
+        </div>
+        <div class="col-md-2">
+            {{orderDetail.unitPrice | number : '1.2-2'}}
+        </div>
+        <div class="col-md-2">
+            {{orderDetail.quantity}}
+        </div>
+        <div class="col-md-2">
+            {{(orderDetail.orderId * orderDetail.quantity) | number : '1.2-2'}}
+        </div>
+    </div>
+</div>
+<div class="container my-3" *ngIf="orderDetails.length > 0">
+    <div class="row">
+        <div class="col-md-1 offset-md-11">
+            <strong>{{currentPage + 1}}/{{numberOfPages}}</strong>
+        </div>
+    </div>
+</div>
+
+<div class="container mt-3" *ngIf="orderDetails.length === 0">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="alert alert-primary" role="alert">
+                Trenutno nema porudzbina za odabrani proizvod.
+            </div>
+        </div>
+    </div>
+</div>

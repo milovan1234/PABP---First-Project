@@ -1,0 +1,57 @@
+<div class="row border py-2" [ngClass]="{'bg-light': index % 2 !== 0}">
+    <div class="col-md-1">
+        <span>{{product.productId}}</span>
+    </div>
+    <div class="col-md-2">
+        <span *ngIf="!isEdit">{{product.productName}}</span>
+        <input *ngIf="isEdit" class="form-control" type="text" id="productName" [(ngModel)]="product.productName">
+    </div>
+    <div class="col-md-2">
+        <span *ngIf="!isEdit">{{product.supplier?.companyName}}</span>        
+        <select *ngIf="isEdit" id="suppliers" class="form-select" [(ngModel)]="product.supplierId">
+            <option *ngFor="let supplier of suppliers" value={{supplier.supplierId}}>
+                {{supplier.companyName}}
+            </option>
+        </select>
+    </div>
+    <div class="col-md-1">
+        <span *ngIf="!isEdit">{{product.category?.categoryName}}</span>        
+        <select *ngIf="isEdit" id="categories" class="form-select" [(ngModel)]="product.categoryId">
+            <option *ngFor="let category of categories" value={{category.categoryId}}>
+                {{category.categoryName}}
+            </option>
+        </select>
+    </div>
+    <div class="col-md-1">
+        <span *ngIf="!isEdit">{{product.unitPrice | number : '1.2-2'}}</span>
+        <input *ngIf="isEdit" class="form-control" type="number" id="unitPrice" [(ngModel)]="product.unitPrice">        
+    </div>
+    <div class="col-md-1">
+        <span *ngIf="!isEdit">{{product.unitsInStock}}</span>
+        <input *ngIf="isEdit" class="form-control" type="number" id="unitsInStock" [(ngModel)]="product.unitsInStock">        
+    </div>   
+    <div class="col-md-1">
+        <span>{{(product.unitPrice * product.unitsInStock)  | number : '1.2-2'}}</span>        
+    </div>
+    <div class="col-md-1">
+        <input type="checkbox" class="form-check-input" id="discontinued" [disabled]="!isEdit" [(ngModel)]="product.discontinued">
+    </div>
+    <div class="col-md-2">        
+        <button class="btn btn-outline-secondary mx-2" *ngIf="!isEdit" (click)="editProduct()">
+            <i class="fa fa-gear"></i>
+        </button>        
+        <button class="btn btn-outline-danger" *ngIf="!isEdit" (click)="deleteProduct()">
+            <i class="fa fa-trash"></i>
+        </button>
+        <button class="btn btn-outline-info mx-2" *ngIf="!isEdit" (click)="showOrderDetails()">
+            <i class="fa fa-info-circle"></i>
+        </button>
+        <button class="btn btn-outline-success mx-2" *ngIf="isEdit" (click)="updateProduct()">
+            <i class="fa fa-save"></i>
+        </button>
+        <button class="btn btn-outline-secondary" *ngIf="isEdit" (click)="cancelEdit()">
+            <i class="fa fa-times"></i>
+        </button>        
+    </div>        
+</div>
+

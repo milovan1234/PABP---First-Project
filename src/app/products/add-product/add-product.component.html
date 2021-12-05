@@ -1,0 +1,35 @@
+<div class="row mt-3">
+    <div class="col-md-2">
+        <div class="form-group">
+            <label for="productName">Naziv proizvoda:</label>
+            <input type="text" class="form-control" [(ngModel)]="product.productName" id="productName">
+        </div>
+        <div class="form-group mt-2">
+            <label for="suppliers">Odaberite dobavljaca:</label>
+            <select id="suppliers" class="form-select" [(ngModel)]="product.supplierId">
+                <option selected></option>
+                <option *ngFor="let supplier of suppliers" value={{supplier.supplierId}}>
+                    {{supplier.companyName}}
+                </option>
+            </select>
+        </div>
+        <div class="form-group mt-2">
+            <label for="unitPrice">Jedinicna cena:</label>
+            <input type="number" class="form-control" [(ngModel)]="product.unitPrice" id="unitPrice">
+        </div>
+        <div class="form-group mt-2">
+            <label for="unitsInStock">Broj proizvoda na stanju:</label>
+            <input type="number" class="form-control" [(ngModel)]="product.unitsInStock" id="unitsInStock">
+        </div>
+        <div class="form-group mt-2">
+            <label for="discontinued">Proizvodi se:</label>
+            <input type="checkbox" class="form-check-input mx-1" id="discontinued" [(ngModel)]="product.discontinued">
+        </div>
+        <div class="form-group mt-2">
+            <label for="sum">Ukupna cena: {{(product.unitPrice * product.unitsInStock)  | number : '1.2-2'}}</label>
+        </div>
+        <div class="form-group mt-3">
+            <button class="btn btn-success form-control" (click)="saveProduct()">Sacuvaj</button>
+        </div>
+    </div>    
+</div>
